@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule    ^@(.*)    redirect.php?id=$1

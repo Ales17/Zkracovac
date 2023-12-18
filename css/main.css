@@ -3,9 +3,42 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+body {
+    background: linear-gradient(to right, rgb(28, 38, 89),
+            rgb(18, 128, 113));
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 10px;
+
+}
+
+.wrapper {
+    backdrop-filter: blur(15px);
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(24, 26, 27, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+h1 {
+    margin: 0;
+}
+
 .shortener {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    gap: 5px;
+    gap: .5rem;
+}
+
+.message {
+    text-align: center;
+}
+
+input[type="submit"],
+input[type="url"] {
+    height: 2.2rem;
 }

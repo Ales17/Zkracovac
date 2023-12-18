@@ -10,47 +10,38 @@
 </head>
 
 <body>
-    <h1>Zkracovač</h1>
-    <form action="" method="post" class="shortener">
-        <input type="text" name="link" required>
-        <input type="submit" name="submit" value="Zkrátit">
-    </form>
-   
-    <?php
-    include "conn.php";
-    function shortLinkElement($link)
-    {
-        return '<div>Děkujeme za použití zkracovače. Zkrácený odkaz najdete na adrese: ' . $link . '</div>';
-    }
 
-    function getShortLink($url)
-    {
-        return '<a href="http://' . $url . '">' . $url . '</a>';
-    }
-
-
-    if (isset($_POST["submit"])) {
-        $random = rand(10000, 99999);
-        $originalLink = $_POST["link"];
-        $sql = $pdo->prepare("INSERT into link (original_link/* , short_link */) 
-    VALUES (?/* , ? */)");
-        $result = $sql->execute(array($originalLink /* , $random */));
-
-        $last = $pdo->lastInsertId();
-
-        $sql = $pdo->prepare("SELECT short_link FROM link WHERE id = ?");
-        $sql->execute(array($last));
-
-        $inserted = $sql->fetch();
-        $serviceUrl = "localhost/zkracovac/@";
-        $shortLink = $serviceUrl . $inserted[0];
-
-        echo shortLinkElement(getShortLink($shortLink));
-
-    }
-
-    ?>
-
+    <div class="wrapper">
+        <h1>Zkracovač</h1>
+        <form action="shorten.php" method="post" class="shortener">
+            <input type="url" name="link" required>
+            <input type="submit" name="submit" value="Zkrátit">
+        </form>
+        <?php
+        handleAddedLink();
+        ?>
+    </div>
 </body>
 
 </html>
+
+<?php
+
+
+
+
+function message($content)
+{
+    return "<div class='message'>$content</div>";
+}
+function handleAddedLink()
+{
+    if (isset($_GET["id"])) {
+        $link = $_GET["id"];
+        echo message("Děkujeme za využití zkracovače! Odkaz je <a href='http://localhost/zkracovac/@$link'>WWW/$link</a>");
+    } else if (isset($_GET["error"])) {
+        echo message("Vámi zaslaný text není odkaz, nebyl tedy přidán do zkracovače!");
+    }
+
+}
+?>
